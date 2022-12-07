@@ -5,6 +5,7 @@ import axiosApi from "./axiosApi";
 import Page from "./components/Page/Page";
 import {Route, Routes} from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
+import PageForm from "./components/PageForm/PageForm";
 
 
 // const INFO = [
@@ -28,6 +29,8 @@ function App() {
         <Route path={"/pages/:category"} key={Math.random()} element={(
           <Page/>
         )}/>
+
+        <Route path='/pages/admin' element={<PageForm/>}/>
 
         <Route path='*' element={<h1 className="mt-3">Not found</h1>}/>
 
