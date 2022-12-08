@@ -2,14 +2,15 @@ import React, {FormEvent, useState} from 'react';
 import {ApiPageType, PageType} from "../../types";
 import axiosApi from "../../axiosApi";
 import {useNavigate} from "react-router-dom";
+import ReactQuill from 'react-quill';
 
 const PageForm = () => {
   const navigate = useNavigate();
 
   const [page, setPage] = useState<PageType>({
-    title: '',
-    content: '',
-    name: '',
+      title: '',
+      content: '',
+      name: '',
     }
   );
 
@@ -18,10 +19,19 @@ const PageForm = () => {
     const {name, value} = e.target;
 
     setPage(prev => ({
-          ...prev,
-          [name]: value,
-        }));
+      ...prev,
+      [name]: value,
+    }));
   };
+
+
+  const onQuillChange = (text: string) => {
+    setPage(prev => ({
+      ...prev,
+      content: text,
+    }));
+  };
+
 
   const onSelectChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const {name, value} = e.target;
@@ -32,7 +42,7 @@ const PageForm = () => {
     }));
 
     try {
-      const response = await axiosApi.get<ApiPageType| null>('/pages/' + value + '.json');
+      const response = await axiosApi.get<ApiPageType | null>('/pages/' + value + '.json');
       const newPage = response.data
 
       if (newPage !== null) {
@@ -46,8 +56,6 @@ const PageForm = () => {
 
 
     }
-
-
   };
 
   const onFormSubmit = async (e: FormEvent) => {
@@ -58,7 +66,7 @@ const PageForm = () => {
     } finally {
       navigate('/pages/' + page.name);
     }
-  }
+  };
 
 
   return (
@@ -87,12 +95,14 @@ const PageForm = () => {
         onChange={onInputChange}
       />
 
-      <textarea
+      <ReactQuill
+        theme="snow"
         className="form-control mb-2 w-75"
-        name="content"
+        id="content"
+        // name="content"
         value={page.content}
         placeholder={"Enter content:"}
-        onChange={onInputChange}
+        onChange={onQuillChange}
       />
 
       <button className="btn btn-success" type="submit">Save</button>

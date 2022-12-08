@@ -1,7 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
-import type {PageType, PagesType} from "./types";
-import axiosApi from "./axiosApi";
 import Page from "./components/Page/Page";
 import {Route, Routes} from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
