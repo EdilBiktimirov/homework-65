@@ -4,7 +4,7 @@ export interface PageType {
   name: string;
 }
 
-export type ApiPageType = Omit<PageType, 'name'>
+export type ApiPageType = Omit<PageType, 'name'>;
 
 export interface PagesType {
   [id: string]: PageType;

@@ -6,7 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter} from "react-router-dom";
 import 'react-quill/dist/quill.snow.css';
 
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
