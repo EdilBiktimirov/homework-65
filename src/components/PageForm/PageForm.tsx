@@ -1,7 +1,6 @@
 import React, {FormEvent, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import axiosApi from "../../axiosApi";
-import slugify from "react-slugify";
 import ReactQuill from 'react-quill';
 import type {ApiPageType, PageType} from "../../types";
 
@@ -19,12 +18,30 @@ const PageForm: React.FC<Props> = ({isEdit, pages}) => {
     name: '',
   });
 
+  const slugString = (value: string) => {
+    value = value.replace(/^\s+|\s+$/g, ''); // trim
+    value = value.toLowerCase();
+
+    const from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+    const to   = "aaaaeeeeiiiioooouuuunc------";
+    for (let i = 0, l = from.length ; i < l ; i++) {
+      value = value.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    }
+
+    value = value.replace(/[^a-z0-9 -]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+
+    return value;
+  };
+
+
   const onSlugChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = e.target;
 
     setPage(prev => ({
       ...prev,
-      [name]: slugify(value),
+      [name]: slugString(value),
     }));
   };
 
